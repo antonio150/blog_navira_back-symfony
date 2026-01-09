@@ -1,0 +1,4 @@
+upload_image:
+    documents_dir: 'E:\Mes Projets\blog_navira_back/public/uploads/documents'
+    videos_dir: 'E:\Mes Projets\blog_navira_back/public/uploads/videos'
+    images_dir: 'E:\Mes Projets\blog_navira_back/public/uploads/images'

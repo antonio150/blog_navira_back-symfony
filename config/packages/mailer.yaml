@@ -1,0 +1,3 @@
+framework:
+    mailer:
+        dsn: 'smtps://admin@antonionavira.mg:%env(APP_MAIL_PASSWORD)%@mail.antonionavira.mg:465'
