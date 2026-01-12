@@ -53,6 +53,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'createdBy')]
     private Collection $documents;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $abonnee = null;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -218,6 +221,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
                 $document->setCreatedBy(null);
             }
         }
+        return $this;
+    }
+
+    public function isAbonnee(): ?bool
+    {
+        return $this->abonnee;
+    }
+
+    public function setAbonnee(?bool $abonnee): static
+    {
+        $this->abonnee = $abonnee;
+
         return $this;
     }
 }

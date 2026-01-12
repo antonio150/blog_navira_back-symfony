@@ -109,7 +109,7 @@ class CreateCommentaireClientController
                 ->select('u.email, u.nom')
                 ->join('c.utilisateur', 'u')
                 ->where('c.document = :document')
-                ->andWhere('u != :currentUser') // éviter l'utilisateur qui vient de commenter
+                ->andWhere('u != :currentUser') 
                 ->setParameter('document', $document)
                 ->setParameter('currentUser', $user)
                 ->distinct()

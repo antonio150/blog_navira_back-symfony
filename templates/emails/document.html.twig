@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <body style="margin:0; padding:0; background:#f4f6f8; font-family:Arial, Helvetica, sans-serif;">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center" style="padding:30px 10px;">
+          
+          <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08); overflow:hidden;">
+            
+            <tr>
+              <td style="padding:25px 30px; font-size:15px; color:#333;">
+                
+                <p style="margin:0 0 15px 0;">Bonjour {{ nom }},</p>
+
+                <p style="margin:0 0 25px 0;">
+                  Aujourd'hui, nous avons pour sujet :
+                </p>
+
+                <h2 style="margin:0 0 15px 0; color:#0b3ba7; font-size:22px; line-height:28px;">
+                  {{ titre|raw }}
+                </h2>
+
+                <p style="margin:0 0 25px 0; line-height:22px;">
+                  {{ contenu|raw }}
+                </p>
+
+                <table cellpadding="0" cellspacing="0" style="margin:20px 0 25px 0;">
+                  <tr>
+                    <td>
+                      <a href="{{ url }}" 
+                         style="background:#0b3ba7; color:#ffffff; text-decoration:none; 
+                                padding:12px 22px; border-radius:6px; font-size:14px; display:inline-block;">
+                        👉 Consulter le document
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:0 0 10px 0;">
+                  Cordialement,
+                </p>
+
+                <p style="margin:0 0 20px 0; font-weight:bold;">
+                  Navira
+                </p>
+
+                <table width="100%">
+                  <tr>
+                    <td align="center" style="padding-top:5px; padding-bottom:20px;">
+                      <img src="{{ image_url }}" alt="Navira" width="180" style="border-radius:10px;">
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size:12px; color:#777; text-align:center; margin-top:20px;">
+                  Vous ne souhaitez plus recevoir ces emails ?
+                  <a href="{{ unsubscribe_url }}" style="color:#0b3ba7; text-decoration:underline;">
+                    Se désabonner
+                  </a>
+                </p>
+
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

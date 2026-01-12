@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Désabonnement confirmé</title>
+
+    <!-- RENDU RESPONSIVE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f4f6f8;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        text-align: center;
+      }
+
+      img.logo {
+        width: 140px;
+        max-width: 60%;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      h2 {
+        color: #0b3ba7;
+        margin-bottom: 10px;
+        font-size: 22px;
+      }
+
+      p {
+        line-height: 22px;
+        color: #555;
+      }
+
+      .btn {
+        display: inline-block;
+        margin-top: 15px;
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        background: #0b3ba7;
+        color: #fff;
+        font-size: 14px;
+      }
+
+      /* 📱 RESPONSIVE MOBILE */
+      @media (max-width: 480px) {
+        .container {
+          margin: 10px;
+          padding: 18px;
+        }
+
+        h2 {
+          font-size: 18px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+
+        .btn {
+          width: 100%;
+          box-sizing: border-box;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <img src="/img_default/navira.png" alt="Navira" class="logo" />
+
+      <h2>Désabonnement confirmé</h2>
+
+      <p>
+        L’adresse e-mail <strong>{{ email }}</strong> a été retirée de notre liste d’envoi.
+      </p>
+
+      <p style="color:#777;">
+        Vous ne recevrez plus nos notifications par e-mail.
+      </p>
+
+      <hr />
+
+      <p style="font-size:13px; color:#888;">
+        Si vous vous êtes désabonné(e) par erreur, vous pouvez vous réinscrire à tout moment.
+      </p>
+
+      <a href="https://blog.antonionavira.mg" class="btn">
+        Retour au site
+      </a>
+    </div>
+  </body>
+</html>

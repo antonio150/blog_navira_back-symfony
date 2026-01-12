@@ -3,11 +3,14 @@
 namespace App\Controller\Document;
 
 use App\Entity\Document;
+use App\Entity\Utilisateur;
+use App\Service\MailDocumentService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -23,7 +26,8 @@ class CreateDocumentController
         EntityManagerInterface $entityManager,
         ValidatorInterface $validator,
         TokenStorageInterface $tokenStorage,
-        FileUploader $fileUploader
+        FileUploader $fileUploader,
+        MailDocumentService $mailNotification
     ): JsonResponse {
        
 
@@ -119,6 +123,40 @@ class CreateDocumentController
         try {
             $entityManager->persist($document);
             $entityManager->flush();
+
+            $utilisateur = $entityManager->getRepository(Utilisateur::class)
+             ->findBy(['abonnee' => true]);
+
+            $urlDocument = 'https://blog.antonionavira.mg/home/formation/details/?id=' . $document->getId();
+            $titre = $document->getTitre();
+           
+             if (!empty($utilisateur)) {
+                // Envoyer aux commentateurs existants
+                foreach ($utilisateur as $utilisateurs) {
+                    $unsubscribe_url = 'https://back.blog.antonionavira.mg/api/unsubscribe?email=' . urlencode($utilisateurs->getEmail());
+                    $mailNotification->send(
+                        $utilisateurs->getEmail(),
+                        $utilisateurs->getNom(), 
+                        $urlDocument,
+                        $titre,
+                        $contenue,
+                        $document->getId(),
+                        $unsubscribe_url
+                    );
+                }
+            } else {
+                // Si aucun commentateur existant, envoyer à antoniorollande@gmail.com
+                $unsubscribe_url = "";
+                $mailNotification->send(
+                    'antoniorollande@gmail.com',
+                    $user->getUserIdentifier(), // nom de celui qui a commenté
+                    $urlDocument,
+                    $titre,
+                    $contenue,
+                    $document->getId(),
+                    $unsubscribe_url
+                );
+            }
 
             return new JsonResponse([
                 'status' => 'success',

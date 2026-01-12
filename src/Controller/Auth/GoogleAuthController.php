@@ -45,6 +45,7 @@ class GoogleAuthController
             $user = new Utilisateur();
             $user->setEmail($email);
             $user->setNom($name);
+            $user->setAbonnee(true);
             $user->setRoles(['ROLE_USER']);
             $em->persist($user);
             $em->flush();
