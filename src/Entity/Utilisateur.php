@@ -18,15 +18,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['document:read', 'commentaire:read'])]
+    #[Groups(['document:read', 'commentaire:read','realisation:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['document:read', 'commentaire:read'])]
+    #[Groups(['document:read', 'commentaire:read','realisation:read'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['document:read', 'commentaire:read'])]
+    #[Groups(['document:read', 'commentaire:read','realisation:read'])]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
