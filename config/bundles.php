@@ -12,4 +12,5 @@ return [
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle::class => ['all' => true],
     UploadImageBundle\UploadImageBundle::class => ['all' => true],
     KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
+    AiTestBundle\AiTestBundle::class => ['dev' => true, 'test' => true],
 ];

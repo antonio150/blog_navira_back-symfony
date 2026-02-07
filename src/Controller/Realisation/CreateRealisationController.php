@@ -2,6 +2,7 @@
 
 namespace App\Controller\Realisation;
 
+use App\Entity\ContenuRealisation;
 use App\Entity\Realisation;
 use App\Entity\Utilisateur;
 use App\Service\MailDocumentService;
@@ -40,6 +41,8 @@ class CreateRealisationController
         $lien = $request->request->get('lien') ?? '';
         $titre = $request->request->get('titre') ?? '';
         $file = $request->files->get('image');
+        $contenuJson = $request->request->get('contenuRealisation');
+        $contenuRealisation = json_decode($contenuJson, true) ?? [];
 
         if ($contenue === '') {
             return new JsonResponse([
@@ -70,6 +73,16 @@ class CreateRealisationController
         $realisation->setContenue($contenue);
         $realisation->setLien($lien);
         $realisation->setTitre($titre);
+
+        foreach ($contenuRealisation as $item) {
+            $contenu = new ContenuRealisation();
+            $contenu->setTitre($item['titre'] ?? null);
+            $contenu->setContenue($item['contenue'] ?? null);
+            $contenu->setRealisation($realisation);
+
+            $entityManager->persist($contenu);
+        }
+
         try {
             $result = $fileUploader->upload($file); 
             $publicPath = $result['public_path'];

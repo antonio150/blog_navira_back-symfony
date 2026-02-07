@@ -2,6 +2,7 @@
 
 namespace App\Controller\Realisation;
 
+use App\Entity\ContenuRealisation;
 use App\Entity\Realisation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -50,6 +51,8 @@ class UpdateRealisationController
         $lien = $request->request->get('lien');
         $titre = $request->request->get('titre');
         $file     = $request->files->get('image');
+        $contenuJson = $request->request->get('contenuRealisation');
+        $contenuRealisation = json_decode($contenuJson, true) ?? [];
 
         // ✏️ Mise à jour des champs (si fournis)
         if ($contenue !== null) {
@@ -62,6 +65,10 @@ class UpdateRealisationController
 
         if ($titre !== null) {
             $realisation->setTitre(trim($titre));
+        }
+
+        if (is_string($contenuRealisation)) {
+            $contenuRealisation = json_decode($contenuRealisation, true) ?? [];
         }
 
         // 🖼️ Upload image (facultatif)
@@ -77,6 +84,40 @@ class UpdateRealisationController
                     'status' => 'error',
                     'message' => $e->getMessage()
                 ], Response::HTTP_BAD_REQUEST);
+            }
+        }
+
+        $existing = [];
+        foreach ($realisation->getContenuRealisations() as $cr) {
+            $existing[$cr->getId()] = $cr;
+        }
+
+        $receivedIds = [];
+
+        foreach ($contenuRealisation as $item) {
+            // 🆕 Nouveau contenu
+            if (empty($item['id'])) {
+                $cr = new ContenuRealisation();
+                $cr->setRealisation($realisation);
+            } else {
+                // ✏️ Update existant
+                $cr = $existing[$item['id']] ?? null;
+                if (!$cr) {
+                    continue; // ou erreur
+                }
+                $receivedIds[] = $cr->getId();
+            }
+
+            $cr->setTitre($item['titre'] ?? null);
+            $cr->setContenue($item['contenue'] ?? null);
+
+            $entityManager->persist($cr);
+        }
+
+        // 🗑️ Supprimer les contenus absents de la requête
+        foreach ($existing as $id => $cr) {
+            if (!in_array($id, $receivedIds)) {
+                $entityManager->remove($cr);
             }
         }
 

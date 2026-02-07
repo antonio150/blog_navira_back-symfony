@@ -101,9 +101,17 @@ class Realisation
     #[Groups(['realisation:read'])]
     private Collection $commentaires;
 
+    /**
+     * @var Collection<int, ContenuRealisation>
+     */
+    #[ORM\OneToMany(targetEntity: ContenuRealisation::class, mappedBy: 'realisation')]
+    #[Groups(['realisation:read'])]
+    private Collection $contenuRealisations;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->contenuRealisations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -219,6 +227,36 @@ class Realisation
             // set the owning side to null (unless already changed)
             if ($commentaire->getRealisation() === $this) {
                 $commentaire->setRealisation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ContenuRealisation>
+     */
+    public function getContenuRealisations(): Collection
+    {
+        return $this->contenuRealisations;
+    }
+
+    public function addContenuRealisation(ContenuRealisation $contenuRealisation): static
+    {
+        if (!$this->contenuRealisations->contains($contenuRealisation)) {
+            $this->contenuRealisations->add($contenuRealisation);
+            $contenuRealisation->setRealisation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContenuRealisation(ContenuRealisation $contenuRealisation): static
+    {
+        if ($this->contenuRealisations->removeElement($contenuRealisation)) {
+            // set the owning side to null (unless already changed)
+            if ($contenuRealisation->getRealisation() === $this) {
+                $contenuRealisation->setRealisation(null);
             }
         }
 
