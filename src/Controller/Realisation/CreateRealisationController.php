@@ -129,7 +129,7 @@ class CreateRealisationController
             $utilisateur = $entityManager->getRepository(Utilisateur::class)
              ->findBy(['abonnee' => true]);
 
-            $urlDocument = 'https://blog.antonionavira.mg/home/formation/details/?id=' . $realisation->getId();
+            $urlDocument = 'https://blog.antonionavira.mg/home/realisation/details/?id=' . $realisation->getId();
             $titre = $realisation->getTitre();
            
              if (!empty($utilisateur)) {
