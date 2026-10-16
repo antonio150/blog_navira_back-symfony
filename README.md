@@ -90,7 +90,8 @@ docker compose down
 
 - `POST /api/login` : connexion avec les identifiants du compte; l'authentificateur retourne un JWT.
 - `POST /api/auth/google` : connexion avec un jeton d'identité Google (`idToken` dans le corps JSON).
-- Envoyez le jeton obtenu dans l'en-tête `Authorization: Bearer <jeton>` pour les requêtes authentifiées.
+- Pour une connexion classique, envoyez un corps JSON de la forme `{"email":"vous@example.com","password":"votre-mot-de-passe"}`.
+- Envoyez le jeton obtenu dans l'en-tête `Authorization: Bearer VOTRE_JETON` pour les requêtes authentifiées.
 - Les routes commençant par `/api/admin` sont réservées au rôle `ROLE_ADMIN`.
 
 ## Principales routes
